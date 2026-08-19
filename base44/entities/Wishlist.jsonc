@@ -1,0 +1,31 @@
+{
+  "name": "Wishlist",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string"
+    },
+    "product_id": {
+      "type": "string"
+    },
+    "product_title": {
+      "type": "string"
+    },
+    "product_image": {
+      "type": "string"
+    },
+    "product_price": {
+      "type": "number"
+    },
+    "product_location": {
+      "type": "string"
+    },
+    "seller_email": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_email",
+    "product_id"
+  ]
+}

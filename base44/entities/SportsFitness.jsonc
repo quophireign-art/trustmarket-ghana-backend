@@ -1,0 +1,28 @@
+{
+  "title": "SportsFitness",
+  "description": "Sports, Fitness & Recreation equipment for sale in Ghana",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string", "maxLength": 200, "required": true },
+    "category": { "type": "string", "enum": ["Gym Equipment", "Cardio Machines", "Strength Training", "Sports Gear", "Team Sports", "Outdoor & Camping", "Cycling", "Swimming", "Running & Athletics", "Martial Arts", "Yoga & Pilates", "Water Sports", "Fishing Equipment", "Ball Games", "Racket Sports", "Other"], "required": true },
+    "subCategory": { "type": "string", "maxLength": 100 },
+    "brand": { "type": "string", "maxLength": 100 },
+    "condition": { "type": "string", "enum": ["New", "Used", "Refurbished"], "required": true },
+    "price": { "type": "number", "minimum": 0, "required": true },
+    "negotiable": { "type": "boolean", "default": false },
+    "quantityAvailable": { "type": "number", "minimum": 1, "default": 1 },
+    "location": { "type": "string", "maxLength": 200, "required": true },
+    "region": { "type": "string", "maxLength": 100 },
+    "description": { "type": "string", "maxLength": 5000 },
+    "images": { "type": "array", "items": { "type": "string" } },
+    "sellerName": { "type": "string", "maxLength": 200 },
+    "sellerPhone": { "type": "string", "maxLength": 20 },
+    "sellerEmail": { "type": "string", "maxLength": 200 },
+    "sellerType": { "type": "string", "enum": ["Individual", "Retailer", "Wholesaler", "Importer"], "default": "Individual" },
+    "warranty": { "type": "string", "maxLength": 200 },
+    "deliveryAvailable": { "type": "boolean", "default": false },
+    "featured": { "type": "boolean", "default": false },
+    "status": { "type": "string", "enum": ["active", "sold", "reserved", "inactive"], "default": "active" },
+    "listingType": { "type": "string", "enum": ["standard", "premium", "auction"], "default": "standard" }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "SusuPayout",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string"
+    },
+    "recipient_email": {
+      "type": "string"
+    },
+    "recipient_name": {
+      "type": "string"
+    },
+    "gross_amount": {
+      "type": "number"
+    },
+    "platform_fee": {
+      "type": "number",
+      "description": "10% of gross"
+    },
+    "net_amount": {
+      "type": "number",
+      "description": "90% to recipient"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "processing",
+        "completed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "momo_number": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "member_id",
+    "recipient_email",
+    "gross_amount"
+  ]
+}

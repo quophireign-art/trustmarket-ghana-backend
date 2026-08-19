@@ -1,0 +1,18 @@
+{
+  "name": "SusuCircleContribution",
+  "fields": {
+    "member_id": "string",
+    "user_email": "string",
+    "circle_id": "string",
+    "circle_name": "string",
+    "amount": "number",
+    "payment_method": "string",
+    "status": "string",
+    "reference": "string",
+    "cycle_number": "number",
+    "contribution_date": "date",
+    "receipt_url": "string",
+    "processed_by": "string",
+    "notes": "string"
+  }
+}

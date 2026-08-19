@@ -1,0 +1,72 @@
+{
+  "name": "SellerSubscription",
+  "type": "object",
+  "properties": {
+    "seller_email": {
+      "type": "string",
+      "description": "Email of the subscribed seller"
+    },
+    "tier": {
+      "type": "string",
+      "enum": [
+        "starter",
+        "silver",
+        "gold",
+        "platinum",
+        "enterprise"
+      ],
+      "description": "Package tier purchased"
+    },
+    "listing_duration_days": {
+      "type": "number",
+      "default": 14,
+      "description": "Number of days products stay active before expiring"
+    },
+    "renewal_reminders_sent": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": [],
+      "description": "List of reminder stages already sent (e.g. ['7d','3d','1d','expired'])"
+    },
+    "post_limit": {
+      "type": "number",
+      "default": 5,
+      "description": "Max product posts allowed (-1 = unlimited)"
+    },
+    "posts_used": {
+      "type": "number",
+      "default": 0,
+      "description": "Number of products posted against this subscription"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Amount paid in GHS"
+    },
+    "paystack_reference": {
+      "type": "string",
+      "description": "Paystack transaction reference"
+    },
+    "starts_at": {
+      "type": "string",
+      "description": "ISO timestamp when the subscription becomes active"
+    },
+    "expires_at": {
+      "type": "string",
+      "description": "ISO timestamp when the subscription expires"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "expired"
+      ],
+      "default": "active"
+    }
+  },
+  "required": [
+    "seller_email",
+    "tier",
+    "amount",
+    "expires_at"
+  ]
+}

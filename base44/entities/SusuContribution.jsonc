@@ -1,0 +1,45 @@
+{
+  "name": "SusuContribution",
+  "type": "object",
+  "properties": {
+    "member_id": {
+      "type": "string"
+    },
+    "user_email": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "mtn_momo",
+        "telecel_cash",
+        "bank_transfer",
+        "card"
+      ]
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "confirmed",
+        "failed"
+      ],
+      "default": "pending"
+    },
+    "cycle_number": {
+      "type": "number",
+      "default": 1
+    },
+    "reference": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "member_id",
+    "user_email",
+    "amount"
+  ]
+}

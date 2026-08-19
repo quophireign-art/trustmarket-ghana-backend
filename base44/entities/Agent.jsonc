@@ -1,0 +1,114 @@
+{
+  "name": "Agent",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Agent's login email"
+    },
+    "full_name": {
+      "type": "string",
+      "description": "Full legal name"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Ghana phone number"
+    },
+    "ghana_card_number": {
+      "type": "string",
+      "description": "Ghana Card ID number"
+    },
+    "ghana_card_url": {
+      "type": "string",
+      "description": "URL to uploaded Ghana Card image"
+    },
+    "ghana_card_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether Ghana Card passed verification"
+    },
+    "face_photo_url": {
+      "type": "string",
+      "description": "URL to face capture photo for liveness check"
+    },
+    "face_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Whether face capture passed verification"
+    },
+    "gps_latitude": {
+      "type": "number",
+      "description": "GPS latitude at registration"
+    },
+    "gps_longitude": {
+      "type": "number",
+      "description": "GPS longitude at registration"
+    },
+    "gps_address": {
+      "type": "string",
+      "description": "Human-readable address from GPS"
+    },
+    "region": {
+      "type": "string",
+      "description": "Operating region in Ghana"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "inactive", "suspended"],
+      "default": "inactive"
+    },
+    "approved": {
+      "type": "boolean",
+      "default": false,
+      "description": "Admin approval status"
+    },
+    "is_verified": {
+      "type": "boolean",
+      "default": false,
+      "description": "Fully verified (Ghana Card + Face + GPS)"
+    },
+    "trust_score": {
+      "type": "number",
+      "default": 0,
+      "description": "0-100 trust score based on performance"
+    },
+    "total_sales": {
+      "type": "number",
+      "default": 0,
+      "description": "Total number of products sold"
+    },
+    "total_commission_earned": {
+      "type": "number",
+      "default": 0,
+      "description": "Total commission earned in GHS"
+    },
+    "total_commission_paid": {
+      "type": "number",
+      "default": 0,
+      "description": "Total commission withdrawn in GHS"
+    },
+    "commission_balance": {
+      "type": "number",
+      "default": 0,
+      "description": "Current available commission balance"
+    },
+    "momo_number": {
+      "type": "string",
+      "description": "Mobile money number for commission payouts"
+    },
+    "momo_provider": {
+      "type": "string",
+      "enum": ["mtn", "telecel"],
+      "description": "Mobile money provider"
+    },
+    "created_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_date": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["user_email", "full_name", "phone", "region"]
+}
