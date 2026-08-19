@@ -220,6 +220,44 @@ const server = http.createServer(async (req, res) => {
       return send(res, 200, { ok: true, time: new Date().toISOString() });
     }
 
+    // ---- Integration status diagnostic ----
+    // GET /api/integrations/status — quickly check which API keys are configured
+    if (parts[1] === 'integrations' && parts[2] === 'status') {
+      return send(res, 200, {
+        paystack: {
+          configured: !!(process.env.PAYSTACK_SECRET_KEY),
+          key_prefix: process.env.PAYSTACK_SECRET_KEY ? process.env.PAYSTACK_SECRET_KEY.slice(0, 8) + '...' : null,
+          note: "Ghana MoMo provider codes: 'mtn', 'vod' (Vodafone Cash / Telecel), 'atl' (AirtelTigo)",
+        },
+        arkesel_sms: {
+          configured: !!(process.env.ARKESEL_API_KEY),
+          key_prefix: process.env.ARKESEL_API_KEY ? process.env.ARKESEL_API_KEY.slice(0, 8) + '...' : null,
+          sender_id: process.env.ARKESEL_SENDER_ID || 'TrustMrkt',
+          note: "Arkesel returns numeric codes (e.g. '1000' for success). HTTP status is the reliable success indicator.",
+        },
+        twilio_sms: {
+          configured: !!(process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN),
+        },
+        google_maps: {
+          configured: !!(process.env.GOOGLE_MAPS_API_KEY),
+          key_prefix: process.env.GOOGLE_MAPS_API_KEY ? process.env.GOOGLE_MAPS_API_KEY.slice(0, 8) + '...' : null,
+        },
+        smtp_email: {
+          configured: !!(process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS),
+          host: process.env.SMTP_HOST || null,
+        },
+        smile_identity: {
+          configured: !!(process.env.SMILE_ID_PARTNER_ID && process.env.SMILE_ID_API_KEY),
+        },
+        onesignal_push: {
+          configured: !!(process.env.ONESIGNAL_APP_ID && process.env.ONESIGNAL_REST_API_KEY),
+        },
+        openai_llm: {
+          configured: !!(process.env.OPENAI_API_KEY),
+        },
+      });
+    }
+
     /* ---------- AUTH ---------- */
     if (parts[1] === 'auth') {
       // ---- Auth-specific rate limiting ----
@@ -395,7 +433,7 @@ const server = http.createServer(async (req, res) => {
           email: user.email,
           amountGHS: body.amount,
           phone: body.phone,
-          provider: body.provider, // 'mtn' | 'tgo' | 'atl'
+          provider: body.provider, // 'mtn' | 'vod' | 'atl'  — 'vod' = Vodafone Cash / Telecel (NOT 'tgo')
           reference,
         });
         return send(res, 200, { ...result, reference });
@@ -493,45 +531,75 @@ const server = http.createServer(async (req, res) => {
           }
         }
         db.createRecord('AgentActivityLog', {
-          action: 'face_verification_attempt',
-          details: { user_email: user.email, has_selfie: !!body.selfie_url, has_card: !!body.ghana_card_url },
           agent_email: user.email,
-          timestamp: new Date().toISOString(),
-        });
-        return send(res, 200, { verified: false, review_required: true, message: 'Face verification not available — Smile ID not configured. Your application has been flagged for manual review.' });
+          action: 'verification_step',
+          details: 'Face capture submitted for manual review',
+          metadata: { selfie_url: body.selfie_url, ghana_card_url: body.ghana_card_url },
+          created_date: new Date().toISOString(),
+        }, user.email);
+        return send(res, 200, { verified: false, review_required: true, message: 'Face capture submitted for manual review.' });
       }
 
-      if (parts[2] === 'status' && req.method === 'GET') {
-        return send(res, 200, { id_verified: user.id_verified || false });
+      if (parts[2] === 'community-review' && req.method === 'POST') {
+        const body = await readJsonBody(req);
+        const result = verification.flagForCommunityReview({ ...body, submitted_by: user.email });
+        return send(res, 200, result);
+      }
+
+      // Phone OTP for delivery confirmation, account verification, etc.
+      if (parts[2] === 'send-otp' && req.method === 'POST') {
+        const body = await readJsonBody(req);
+        const code = sms.generateOtp();
+        db.createRecord('OtpCode', { purpose: body.purpose || 'general', phone: body.phone, code, user_email: user.email, expires_at: new Date(Date.now() + 10 * 60 * 1000).toISOString(), used: false }, user.email);
+        await sms.sendSms({ to: body.phone, message: `Your Tiko verification code is ${code}. It expires in 10 minutes.` });
+        return send(res, 200, { sent: true });
+      }
+
+      if (parts[2] === 'verify-otp' && req.method === 'POST') {
+        const body = await readJsonBody(req);
+        const records = db.listRecords('OtpCode').filter((r) => r.phone === body.phone && r.purpose === (body.purpose || 'general') && !r.used);
+        const match = records.sort((a, b) => (a.created_date < b.created_date ? 1 : -1))[0];
+        const valid = match && match.code === body.code && new Date(match.expires_at) > new Date();
+        if (valid) db.updateRecord('OtpCode', match.id, { used: true });
+        return send(res, 200, { valid: !!valid });
       }
     }
 
-    /* ---------- MAPS ---------- */
+    /* ---------- MAPS & GPS ---------- */
     if (parts[1] === 'maps') {
+      const user = requireAuth(req, url, res);
+      if (!user) return;
+
       if (parts[2] === 'geocode' && req.method === 'GET') {
-        const result = await maps.geocode(url.searchParams.get('q'));
+        const result = await maps.geocodeAddress(url.searchParams.get('address'));
         return send(res, 200, result);
       }
-      if (parts[2] === 'route' && req.method === 'GET') {
-        const result = await maps.route({
-          origin: url.searchParams.get('origin'),
-          destination: url.searchParams.get('destination'),
+
+      if (parts[2] === 'reverse-geocode' && req.method === 'GET') {
+        const result = await maps.reverseGeocode(url.searchParams.get('lat'), url.searchParams.get('lng'));
+        return send(res, 200, result);
+      }
+
+      if (parts[2] === 'distance' && req.method === 'GET') {
+        const result = await maps.distanceAndEta({
+          originLat: url.searchParams.get('origin_lat'),
+          originLng: url.searchParams.get('origin_lng'),
+          destLat: url.searchParams.get('dest_lat'),
+          destLng: url.searchParams.get('dest_lng'),
         });
-        return send(res, 200, result);
+        return send(res, 200, { ...result, delivery_fee: maps.calculateDeliveryFee(result.distance_km) });
       }
-      return send(res, 404, { error: 'Unknown maps endpoint' });
     }
 
-    /* ---------- ENTITIES (generic CRUD) ---------- */
-    if (parts[1] === 'entities') {
+    /* ---------- ENTITIES ---------- */
+    if (parts[1] === 'entities' && parts[2]) {
       const entityName = parts[2];
-      if (!entityName) return send(res, 400, { error: 'Entity name required' });
       if (entityName !== 'User' && !SCHEMAS[entityName]) {
         return send(res, 404, { error: `Unknown entity "${entityName}"` });
       }
 
-      // SSE live-updates stream
-      if (parts[3] === 'sse' && req.method === 'GET') {
+      // SSE subscribe: GET /api/entities/:name/stream
+      if (parts[3] === 'stream' && req.method === 'GET') {
         const user = currentUser(req, url);
         if (!user) return send(res, 401, { error: 'Authentication required' });
         const cors = corsHeaders(req);
