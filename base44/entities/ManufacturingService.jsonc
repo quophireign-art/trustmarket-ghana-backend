@@ -1,0 +1,28 @@
+{
+  "title": "ManufacturingService",
+  "description": "Manufacturing & fabrication services in Ghana",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string", "maxLength": 200, "required": true },
+    "serviceType": { "type": "string", "enum": ["Fabrication & Welding", "Machining & Milling", "Casting & Molding", "Product Assembly", "Packaging Services", "Labeling & Branding", "Quality Testing", "Product Design & Prototyping", "3D Printing", "CNC Services", "Laser Cutting", "Powder Coating", "Food Processing", "Textile Manufacturing", "Chemical Processing", "Other"], "required": true },
+    "price": { "type": "number", "minimum": 0, "required": true },
+    "pricingType": { "type": "string", "enum": ["Per Unit", "Per Hour", "Per Day", "Per Batch", "Fixed", "Negotiable", "Quote on Request"], "default": "Per Unit" },
+    "negotiable": { "type": "boolean", "default": false },
+    "moq": { "type": "number", "minimum": 1, "default": 1 },
+    "leadTime": { "type": "string", "maxLength": 200 },
+    "location": { "type": "string", "maxLength": 200, "required": true },
+    "region": { "type": "string", "maxLength": 100 },
+    "description": { "type": "string", "maxLength": 5000 },
+    "images": { "type": "array", "items": { "type": "string" } },
+    "providerName": { "type": "string", "maxLength": 200, "required": true },
+    "providerPhone": { "type": "string", "maxLength": 20 },
+    "providerEmail": { "type": "string", "maxLength": 200 },
+    "businessType": { "type": "string", "enum": ["Individual", "SME", "Large Company", "Cooperative"], "default": "Individual" },
+    "certifications": { "type": "array", "items": { "type": "string" } },
+    "capacity": { "type": "string", "maxLength": 200 },
+    "materialsWorked": { "type": "array", "items": { "type": "string" } },
+    "featured": { "type": "boolean", "default": false },
+    "status": { "type": "string", "enum": ["active", "inactive", "fully booked"], "default": "active" },
+    "listingType": { "type": "string", "enum": ["standard", "premium"], "default": "standard" }
+  }
+}

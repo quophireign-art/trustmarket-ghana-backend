@@ -1,0 +1,74 @@
+{
+  "name": "DeliveryJob",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string"
+    },
+    "product_title": {
+      "type": "string"
+    },
+    "seller_email": {
+      "type": "string"
+    },
+    "buyer_email": {
+      "type": "string"
+    },
+    "pickup_address": {
+      "type": "string"
+    },
+    "delivery_address": {
+      "type": "string"
+    },
+    "order_amount": {
+      "type": "number"
+    },
+    "delivery_fee": {
+      "type": "number",
+      "description": "10% of order amount"
+    },
+    "rider_id": {
+      "type": "string"
+    },
+    "rider_email": {
+      "type": "string"
+    },
+    "rider_name": {
+      "type": "string"
+    },
+    "rider_phone": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "notified",
+        "accepted",
+        "picked_up",
+        "in_transit",
+        "delivered",
+        "cancelled"
+      ],
+      "default": "pending"
+    },
+    "rider_lat": {
+      "type": "number"
+    },
+    "rider_lng": {
+      "type": "number"
+    },
+    "estimated_minutes": {
+      "type": "number"
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_id",
+    "seller_email",
+    "buyer_email",
+    "order_amount"
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Recipient of the notification"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "delivery",
+        "order",
+        "message",
+        "system"
+      ],
+      "default": "delivery"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "link": {
+      "type": "string",
+      "description": "In-app route to open when the notification is tapped"
+    },
+    "related_id": {
+      "type": "string",
+      "description": "ID of the related entity (e.g. delivery job)"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "user_email",
+    "title",
+    "body"
+  ]
+}

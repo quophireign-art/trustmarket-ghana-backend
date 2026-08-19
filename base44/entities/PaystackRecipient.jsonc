@@ -1,0 +1,15 @@
+{
+  "name": "PaystackRecipient",
+  "type": "object",
+  "properties": {
+    "user_email": { "type": "string", "description": "User email" },
+    "recipient_code": { "type": "string", "description": "Paystack recipient code" },
+    "type": { "type": "string", "default": "nuban" },
+    "account_number": { "type": "string", "description": "Account number" },
+    "bank_code": { "type": "string", "description": "Bank code" },
+    "bank_name": { "type": "string", "description": "Bank name" },
+    "currency": { "type": "string", "default": "GHS" },
+    "active": { "type": "boolean", "default": true }
+  },
+  "required": ["user_email", "recipient_code"]
+}

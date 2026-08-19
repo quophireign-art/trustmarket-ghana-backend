@@ -1,0 +1,98 @@
+{
+  "name": "Order",
+  "type": "object",
+  "properties": {
+    "product_id": {
+      "type": "string",
+      "description": "Product ID"
+    },
+    "product_title": {
+      "type": "string"
+    },
+    "product_image": {
+      "type": "string"
+    },
+    "buyer_email": {
+      "type": "string"
+    },
+    "seller_email": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Order amount in GHS"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "paid",
+        "shipped",
+        "delivered",
+        "completed",
+        "cancelled",
+        "disputed"
+      ],
+      "default": "pending"
+    },
+    "payment_method": {
+      "type": "string",
+      "enum": [
+        "mobile_money",
+        "card",
+        "bank_transfer"
+      ],
+      "default": "mobile_money"
+    },
+    "delivery_method": {
+      "type": "string",
+      "enum": [
+        "delivery",
+        "pickup"
+      ],
+      "default": "delivery"
+    },
+    "delivery_address": {
+      "type": "string"
+    },
+    "shipping_fee": {
+      "type": "number",
+      "default": 0,
+      "description": "Delivery fee in GHS, calculated from buyer's shipping zone"
+    },
+    "shipping_zone": {
+      "type": "string",
+      "description": "Shipping zone label (e.g. Domestic (Ghana), West Africa, Europe & UK)"
+    },
+    "escrow_status": {
+      "type": "string",
+      "enum": [
+        "held",
+        "released",
+        "refunded",
+        "none"
+      ],
+      "default": "none"
+    },
+    "verification_code": {
+      "type": "string",
+      "description": "6-digit code buyer uses to confirm delivery and release escrow"
+    },
+    "tracking_number": {
+      "type": "string",
+      "description": "Courier tracking number provided by seller"
+    },
+    "courier_name": {
+      "type": "string",
+      "description": "Name of the courier/delivery company"
+    },
+    "courier_contact": {
+      "type": "string",
+      "description": "Phone number or contact details of the courier"
+    }
+  },
+  "required": [
+    "product_id",
+    "amount"
+  ]
+}

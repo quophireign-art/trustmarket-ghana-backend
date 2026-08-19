@@ -1,0 +1,24 @@
+{
+  "name": "SusuCirclePayout",
+  "fields": {
+    "member_id": "string",
+    "user_email": "string",
+    "circle_id": "string",
+    "circle_name": "string",
+    "total_pool": "number",
+    "service_fee": "number",
+    "service_fee_percent": "number",
+    "net_amount": "number",
+    "payout_method": "string",
+    "status": "string",
+    "queue_position": "number",
+    "scheduled_date": "date",
+    "completed_date": "date",
+    "admin_approved": "boolean",
+    "admin_notes": "string",
+    "recipient_name": "string",
+    "recipient_phone": "string",
+    "momo_provider": "string",
+    "transaction_reference": "string"
+  }
+}

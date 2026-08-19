@@ -1,0 +1,59 @@
+{
+  "name": "AgentCommission",
+  "type": "object",
+  "properties": {
+    "agent_email": {
+      "type": "string",
+      "description": "Agent's email"
+    },
+    "amount": {
+      "type": "number",
+      "description": "Commission amount in GHS"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["sale", "delivery", "bonus", "referral"],
+      "description": "Type of commission earned"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "available", "withdrawn"],
+      "default": "pending",
+      "description": "Commission status"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the commission source"
+    },
+    "order_id": {
+      "type": "string",
+      "description": "Related order ID if applicable"
+    },
+    "product_id": {
+      "type": "string",
+      "description": "Related product ID if applicable"
+    },
+    "product_title": {
+      "type": "string",
+      "description": "Product title for display"
+    },
+    "buyer_email": {
+      "type": "string",
+      "description": "Buyer's email"
+    },
+    "created_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "available_date": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When commission becomes available for withdrawal"
+    },
+    "withdrawn_date": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["agent_email", "amount", "type"]
+}

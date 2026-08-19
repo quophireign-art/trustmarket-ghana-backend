@@ -1,0 +1,57 @@
+{
+  "name": "Dispute",
+  "type": "object",
+  "properties": {
+    "order_id": {
+      "type": "string"
+    },
+    "product_title": {
+      "type": "string"
+    },
+    "product_image": {
+      "type": "string"
+    },
+    "buyer_email": {
+      "type": "string"
+    },
+    "seller_email": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "number"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "damaged_item",
+        "not_as_described",
+        "wrong_item",
+        "not_received",
+        "other"
+      ]
+    },
+    "details": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "open",
+        "under_review",
+        "resolved_buyer",
+        "resolved_seller",
+        "closed"
+      ],
+      "default": "open"
+    },
+    "admin_notes": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "order_id",
+    "buyer_email",
+    "seller_email",
+    "reason"
+  ]
+}

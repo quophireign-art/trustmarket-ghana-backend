@@ -1,0 +1,37 @@
+{
+  "name": "StreamGift",
+  "type": "object",
+  "properties": {
+    "stream_id": {
+      "type": "string"
+    },
+    "sender_email": {
+      "type": "string"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "host_email": {
+      "type": "string"
+    },
+    "gift_key": {
+      "type": "string"
+    },
+    "gift_name": {
+      "type": "string"
+    },
+    "gift_emoji": {
+      "type": "string"
+    },
+    "amount_ghs": {
+      "type": "number"
+    }
+  },
+  "required": [
+    "stream_id",
+    "sender_email",
+    "host_email",
+    "gift_key",
+    "amount_ghs"
+  ]
+}

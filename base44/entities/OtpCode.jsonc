@@ -1,0 +1,13 @@
+{
+  "name": "OtpCode",
+  "type": "object",
+  "properties": {
+    "purpose": { "type": "string", "description": "OTP purpose" },
+    "phone": { "type": "string", "description": "Phone number" },
+    "code": { "type": "string", "description": "OTP code" },
+    "user_email": { "type": "string", "description": "User email" },
+    "expires_at": { "type": "string", "description": "ISO timestamp when OTP expires" },
+    "used": { "type": "boolean", "default": false }
+  },
+  "required": ["phone", "code"]
+}

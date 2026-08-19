@@ -1,0 +1,32 @@
+{
+  "title": "ManufacturingEquipment",
+  "description": "Manufacturing Equipment & Industrial Supplies for sale in Ghana",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string", "maxLength": 200, "required": true },
+    "category": { "type": "string", "enum": ["Factory Machinery", "Food Processing Equipment", "Packaging Machinery", "Printing Equipment", "Textile Machinery", "Woodworking Machinery", "Metalworking Machinery", "Plastic & Rubber Machinery", "Construction Machinery", "Agricultural Machinery", "Industrial Generators", "Compressors & Pumps", "Material Handling", "Measurement & Testing", "Safety & Protective Gear", "Spare Parts", "Other"], "required": true },
+    "subCategory": { "type": "string", "maxLength": 100 },
+    "brand": { "type": "string", "maxLength": 100 },
+    "model": { "type": "string", "maxLength": 100 },
+    "year": { "type": "number", "minimum": 1900, "maximum": 2030 },
+    "condition": { "type": "string", "enum": ["New", "Used", "Refurbished", "For Parts"], "required": true },
+    "price": { "type": "number", "minimum": 0, "required": true },
+    "negotiable": { "type": "boolean", "default": false },
+    "powerSource": { "type": "string", "enum": ["Electric", "Diesel", "Petrol", "Manual", "Hydraulic", "Pneumatic", "Solar", "Other"] },
+    "capacity": { "type": "string", "maxLength": 100 },
+    "location": { "type": "string", "maxLength": 200, "required": true },
+    "region": { "type": "string", "maxLength": 100 },
+    "description": { "type": "string", "maxLength": 5000 },
+    "images": { "type": "array", "items": { "type": "string" } },
+    "sellerName": { "type": "string", "maxLength": 200 },
+    "sellerPhone": { "type": "string", "maxLength": 20 },
+    "sellerEmail": { "type": "string", "maxLength": 200 },
+    "sellerType": { "type": "string", "enum": ["Individual", "Dealer", "Manufacturer", "Importer"], "default": "Individual" },
+    "warranty": { "type": "string", "maxLength": 200 },
+    "installation": { "type": "boolean", "default": false },
+    "training": { "type": "boolean", "default": false },
+    "featured": { "type": "boolean", "default": false },
+    "status": { "type": "string", "enum": ["active", "sold", "reserved", "inactive"], "default": "active" },
+    "listingType": { "type": "string", "enum": ["standard", "premium", "auction"], "default": "standard" }
+  }
+}

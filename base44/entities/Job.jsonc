@@ -1,0 +1,33 @@
+{
+  "title": "Job",
+  "description": "Job listings and vacancies in Ghana",
+  "type": "object",
+  "properties": {
+    "title": { "type": "string", "maxLength": 200, "required": true },
+    "jobType": { "type": "string", "enum": ["Full-time", "Part-time", "Contract", "Temporary", "Internship", "Remote", "Freelance", "Volunteer"], "required": true },
+    "industry": { "type": "string", "enum": ["Agriculture", "Construction", "Education", "Finance", "Healthcare", "Hospitality", "IT & Technology", "Manufacturing", "Marketing", "Media", "Mining", "NGO", "Real Estate", "Retail", "Sales", "Security", "Transportation", "Other"], "required": true },
+    "category": { "type": "string", "maxLength": 100 },
+    "experienceLevel": { "type": "string", "enum": ["Entry Level", "Mid Level", "Senior Level", "Executive", "No Experience"], "default": "Entry Level" },
+    "salary": { "type": "number", "minimum": 0, "required": true },
+    "salaryCurrency": { "type": "string", "enum": ["GHS", "USD"], "default": "GHS" },
+    "salaryPeriod": { "type": "string", "enum": ["Per Hour", "Per Day", "Per Week", "Per Month", "Per Year"], "default": "Per Month" },
+    "negotiable": { "type": "boolean", "default": false },
+    "educationRequired": { "type": "string", "maxLength": 200 },
+    "skillsRequired": { "type": "array", "items": { "type": "string" } },
+    "positionsAvailable": { "type": "number", "minimum": 1, "default": 1 },
+    "deadline": { "type": "string", "maxLength": 50 },
+    "location": { "type": "string", "maxLength": 200, "required": true },
+    "region": { "type": "string", "maxLength": 100 },
+    "description": { "type": "string", "maxLength": 5000 },
+    "companyName": { "type": "string", "maxLength": 200, "required": true },
+    "companyWebsite": { "type": "string", "maxLength": 300 },
+    "contactName": { "type": "string", "maxLength": 200 },
+    "contactPhone": { "type": "string", "maxLength": 20 },
+    "contactEmail": { "type": "string", "maxLength": 200 },
+    "companyLogo": { "type": "string" },
+    "benefits": { "type": "array", "items": { "type": "string" } },
+    "featured": { "type": "boolean", "default": false },
+    "status": { "type": "string", "enum": ["active", "closed", "paused", "inactive"], "default": "active" },
+    "listingType": { "type": "string", "enum": ["standard", "premium"], "default": "standard" }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "AuctionChatMessage",
+  "type": "object",
+  "properties": {
+    "auction_id": {
+      "type": "string",
+      "description": "ID of the auction this message belongs to"
+    },
+    "sender_email": {
+      "type": "string"
+    },
+    "sender_name": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "message_type": {
+      "type": "string",
+      "enum": [
+        "question",
+        "offer",
+        "chat"
+      ],
+      "default": "chat"
+    },
+    "offer_amount": {
+      "type": "number",
+      "description": "Proposed price if message_type is offer"
+    }
+  },
+  "required": [
+    "auction_id",
+    "sender_email",
+    "content"
+  ]
+}

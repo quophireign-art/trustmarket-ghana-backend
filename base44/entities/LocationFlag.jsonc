@@ -1,0 +1,60 @@
+{
+  "name": "LocationFlag",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email of the blocked user, if authenticated"
+    },
+    "ip": {
+      "type": "string",
+      "description": "Detected IP address"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "isp": {
+      "type": "string",
+      "description": "Detected internet service provider"
+    },
+    "provider": {
+      "type": "string",
+      "description": "Connection org/provider name (e.g. VPN host)"
+    },
+    "flag_type": {
+      "type": "string",
+      "enum": [
+        "vpn",
+        "proxy",
+        "hosting",
+        "mismatch",
+        "unknown"
+      ],
+      "default": "vpn",
+      "description": "Why the attempt was flagged"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Human-readable reason the attempt was blocked"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "blocked",
+        "reviewed",
+        "cleared"
+      ],
+      "default": "blocked"
+    },
+    "admin_notes": {
+      "type": "string",
+      "description": "Notes added by an admin reviewing the flag"
+    }
+  },
+  "required": [
+    "reason"
+  ]
+}
